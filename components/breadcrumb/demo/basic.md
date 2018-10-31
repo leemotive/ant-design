@@ -1,6 +1,6 @@
 ---
 order: 0
-title:   
+title:
   zh-CN: 基本
   en-US: Basic Usage
 ---
@@ -13,7 +13,7 @@ title:
 
 The simplest use
 
-````__react
+````jsx
 import { Breadcrumb } from 'antd';
 
 ReactDOM.render(
@@ -22,6 +22,6 @@ ReactDOM.render(
     <Breadcrumb.Item><a href="">Application Center</a></Breadcrumb.Item>
     <Breadcrumb.Item><a href="">Application List</a></Breadcrumb.Item>
     <Breadcrumb.Item>An Application</Breadcrumb.Item>
-  </Breadcrumb>
-, mountNode);
+  </Breadcrumb>,
+  mountNode);
 ````

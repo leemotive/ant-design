@@ -13,7 +13,7 @@ title:
 
 A borderless card on a gray background.
 
-````__react
+````jsx
 import { Card } from 'antd';
 
 ReactDOM.render(
@@ -23,6 +23,6 @@ ReactDOM.render(
       <p>Card content</p>
       <p>Card content</p>
     </Card>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

@@ -17,22 +17,22 @@ Display tree structure data in Table, control the indent width by setting `inden
 
 > Note, no support for recursive selection of tree structure data table yet.
 
-````__react
+````jsx
 import { Table } from 'antd';
 
 const columns = [{
   title: 'Name',
   dataIndex: 'name',
   key: 'name',
-  width: '40%',
 }, {
   title: 'Age',
   dataIndex: 'age',
   key: 'age',
-  width: '30%',
+  width: '12%',
 }, {
   title: 'Address',
   dataIndex: 'address',
+  width: '30%',
   key: 'address',
 }];
 
@@ -101,6 +101,6 @@ const rowSelection = {
 };
 
 ReactDOM.render(
-  <Table columns={columns} rowSelection={rowSelection} dataSource={data} />
-, mountNode);
+  <Table columns={columns} rowSelection={rowSelection} dataSource={data} />,
+  mountNode);
 ````

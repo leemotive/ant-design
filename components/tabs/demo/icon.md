@@ -1,6 +1,6 @@
 ---
 order: 2
-title: 
+title:
   zh-CN: 图标
   en-US: Icon
 ---
@@ -13,9 +13,9 @@ title:
 
 The Tab with Icon.
 
-
-````__react
+````jsx
 import { Tabs, Icon } from 'antd';
+
 const TabPane = Tabs.TabPane;
 
 ReactDOM.render(
@@ -26,6 +26,6 @@ ReactDOM.render(
     <TabPane tab={<span><Icon type="android" />Tab 2</span>} key="2">
       Tab 2
     </TabPane>
-  </Tabs>
-, mountNode);
+  </Tabs>,
+  mountNode);
 ````

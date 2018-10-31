@@ -13,14 +13,24 @@ title:
 
 A basic card containing a title, content and an extra corner content.
 
-````__react
+````jsx
 import { Card } from 'antd';
 
 ReactDOM.render(
-  <Card title="Card title" extra={<a href="#">More</a>} style={{ width: 300 }}>
+  <Card
+    title="Card title"
+    extra={<a href="#">More</a>}
+    style={{ width: 300 }}
+  >
     <p>Card content</p>
     <p>Card content</p>
     <p>Card content</p>
-  </Card>
-, mountNode);
+  </Card>,
+  mountNode);
 ````
+
+<style>
+.code-box-demo p {
+  margin: 0;
+}
+</style>

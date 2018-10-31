@@ -13,7 +13,7 @@ title:
 
 Hover to expand sub menu, click to select option.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -50,8 +50,11 @@ function displayRender(label) {
 }
 
 ReactDOM.render(
-  <Cascader options={options} expandTrigger="hover"
-    displayRender={displayRender} onChange={onChange}
-  />
-, mountNode);
+  <Cascader
+    options={options}
+    expandTrigger="hover"
+    displayRender={displayRender}
+    onChange={onChange}
+  />,
+  mountNode);
 ````

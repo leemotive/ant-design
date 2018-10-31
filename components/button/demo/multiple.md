@@ -1,5 +1,5 @@
 ---
-order: 6
+order: 5
 title:
   zh-CN: 多个按钮组合
   en-US: Multiple Buttons
@@ -14,7 +14,7 @@ title:
 If you need several buttons, we recommend that you use 1 primary button + n secondary buttons, and if there are more than three operations, you can group some of them into `Dropdown.Button`.
 
 
-````__react
+````jsx
 import { Button, Menu, Dropdown, Icon } from 'antd';
 
 function handleMenuClick(e) {
@@ -32,10 +32,10 @@ const menu = (
 ReactDOM.render(
   <div>
     <Button type="primary">primary</Button>
-    <Button type="ghost">secondary</Button>
+    <Button>secondary</Button>
     <Dropdown overlay={menu}>
-      <Button type="ghost">
-        more <Icon type="down" />
+      <Button>
+        Actions <Icon type="down" />
       </Button>
     </Dropdown>
   </div>,

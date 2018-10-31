@@ -13,7 +13,7 @@ title:
 
 Disable option by specifying the `disabled` property in `options`.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -46,6 +46,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <Cascader options={options} onChange={onChange} />
-, mountNode);
+  <Cascader options={options} onChange={onChange} />,
+  mountNode);
 ````

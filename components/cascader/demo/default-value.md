@@ -13,7 +13,7 @@ title:
 
 Specifies default value by an array.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -45,6 +45,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <Cascader defaultValue={['zhejiang', 'hangzhou', 'xihu']} options={options} onChange={onChange} />
-, mountNode);
+  <Cascader defaultValue={['zhejiang', 'hangzhou', 'xihu']} options={options} onChange={onChange} />,
+  mountNode);
 ````

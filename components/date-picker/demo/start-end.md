@@ -13,11 +13,11 @@ title:
 
 ## en-US
 
-When `RangePicker` is not satisfied your requirements, try to implement similar functionality with two `DatePicker`.
+When `RangePicker` does not satisfied your requirements, try to implement similar functionality with two `DatePicker`.
 > * Use the `disabledDate` property to limit the start and end dates.
-> * Imporve user experience with `open` `onOpenChange`.
+> * Improve user experience with `open` and `onOpenChange`.
 
-````__react
+````jsx
 import { DatePicker } from 'antd';
 
 class DateRange extends React.Component {

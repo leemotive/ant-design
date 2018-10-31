@@ -13,7 +13,7 @@ title:
 
 For instance, add an external link after the selected value.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -64,7 +64,7 @@ ReactDOM.render(
     options={options}
     defaultValue={['zhejiang', 'hangzhou', 'xihu']}
     displayRender={displayRender}
-    style={{ width: 270 }}
-  />
-, mountNode);
+    style={{ width: '100%' }}
+  />,
+  mountNode);
 ````

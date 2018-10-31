@@ -11,63 +11,69 @@ title:
 
 ## en-US
 
-When user visit a page with a list of items, and want to create a new item. The page can popup a form in Modal, then let user fills in the form to create an item.
+When user visit a page with a list of items, and want to create a new item. The page can popup a form in Modal, then let user fill in the form to create an item.
 
-````__react
+````jsx
 import { Button, Modal, Form, Input, Radio } from 'antd';
+
 const FormItem = Form.Item;
 
 const CollectionCreateForm = Form.create()(
-  (props) => {
-    const { visible, onCancel, onCreate, form } = props;
-    const { getFieldDecorator } = form;
-    return (
-      <Modal
-        visible={visible}
-        title="Create a new collection"
-        okText="Create"
-        onCancel={onCancel}
-        onOk={onCreate}
-      >
-        <Form vertical>
-          <FormItem label="Title">
-            {getFieldDecorator('title', {
-              rules: [{ required: true, message: 'Please input the title of collection!' }],
-            })(
-              <Input />
-            )}
-          </FormItem>
-          <FormItem label="Description">
-            {getFieldDecorator('description')(<Input type="textarea" />)}
-          </FormItem>
-          <FormItem className="collection-create-form_last-form-item">
-            {getFieldDecorator('modifier', {
-              initialValue: 'public',
-            })(
-              <Radio.Group>
-                <Radio value="public">Public</Radio>
-                <Radio value="private">Private</Radio>
-              </Radio.Group>
-            )}
-          </FormItem>
-        </Form>
-      </Modal>
-    );
+  class extends React.Component {
+    render() {
+      const { visible, onCancel, onCreate, form } = this.props;
+      const { getFieldDecorator } = form;
+      return (
+        <Modal
+          visible={visible}
+          title="Create a new collection"
+          okText="Create"
+          onCancel={onCancel}
+          onOk={onCreate}
+        >
+          <Form layout="vertical">
+            <FormItem label="Title">
+              {getFieldDecorator('title', {
+                rules: [{ required: true, message: 'Please input the title of collection!' }],
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="Description">
+              {getFieldDecorator('description')(<Input type="textarea" />)}
+            </FormItem>
+            <FormItem className="collection-create-form_last-form-item">
+              {getFieldDecorator('modifier', {
+                initialValue: 'public',
+              })(
+                <Radio.Group>
+                  <Radio value="public">Public</Radio>
+                  <Radio value="private">Private</Radio>
+                </Radio.Group>
+              )}
+            </FormItem>
+          </Form>
+        </Modal>
+      );
+    }
   }
 );
 
-const CollectionsPage = React.createClass({
-  getInitialState() {
-    return { visible: false };
-  },
-  showModal() {
+class CollectionsPage extends React.Component {
+  state = {
+    visible: false,
+  };
+
+  showModal = () => {
     this.setState({ visible: true });
-  },
-  handleCancel() {
+  }
+
+  handleCancel = () => {
     this.setState({ visible: false });
-  },
-  handleCreate() {
-    const form = this.form;
+  }
+
+  handleCreate = () => {
+    const form = this.formRef.props.form;
     form.validateFields((err, values) => {
       if (err) {
         return;
@@ -77,24 +83,26 @@ const CollectionsPage = React.createClass({
       form.resetFields();
       this.setState({ visible: false });
     });
-  },
-  saveFormRef(form) {
-    this.form = form;
-  },
+  }
+
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
+  }
+
   render() {
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>New Collection</Button>
         <CollectionCreateForm
-          ref={this.saveFormRef}
+          wrappedComponentRef={this.saveFormRef}
           visible={this.state.visible}
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
         />
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<CollectionsPage />, mountNode);
 ````

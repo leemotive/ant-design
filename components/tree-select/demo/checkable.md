@@ -1,66 +1,66 @@
 ---
-order: 2
+order: 3
 title:
-  zh-CN: 多选
-  en-US: Multiple
+  zh-CN: 可勾选
+  en-US: Checkable
 ---
 
 ## zh-CN
 
-多选和勾选框功能。
+使用勾选框实现多选功能。
 
 ## en-US
 
 Multiple and checkable.
 
-````__react
+````jsx
 import { TreeSelect } from 'antd';
+
 const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
 const treeData = [{
-  label: 'Node1',
+  title: 'Node1',
   value: '0-0',
   key: '0-0',
   children: [{
-    label: 'Child Node1',
+    title: 'Child Node1',
     value: '0-0-0',
     key: '0-0-0',
   }],
 }, {
-  label: 'Node2',
+  title: 'Node2',
   value: '0-1',
   key: '0-1',
   children: [{
-    label: 'Child Node3',
+    title: 'Child Node3',
     value: '0-1-0',
     key: '0-1-0',
   }, {
-    label: 'Child Node4',
+    title: 'Child Node4',
     value: '0-1-1',
     key: '0-1-1',
   }, {
-    label: 'Child Node5',
+    title: 'Child Node5',
     value: '0-1-2',
     key: '0-1-2',
   }],
 }];
 
-const Demo = React.createClass({
-  getInitialState() {
-    return {
-      value: ['0-0-0'],
-    };
-  },
-  onChange(value) {
-    console.log('onChange ', value, arguments);
+class Demo extends React.Component {
+  state = {
+    value: ['0-0-0'],
+  }
+
+  onChange = (value) => {
+    console.log('onChange ', value);
     this.setState({ value });
-  },
+  }
+
   render() {
     const tProps = {
       treeData,
       value: this.state.value,
       onChange: this.onChange,
-      multiple: true,
       treeCheckable: true,
       showCheckedStrategy: SHOW_PARENT,
       searchPlaceholder: 'Please select',
@@ -69,8 +69,8 @@ const Demo = React.createClass({
       },
     };
     return <TreeSelect {...tProps} />;
-  },
-});
+  }
+}
 
 ReactDOM.render(<Demo />, mountNode);
 ````

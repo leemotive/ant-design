@@ -13,7 +13,7 @@ title:
 
 The simplest usage that close the notification box after 4.5s.
 
-````__react
+````jsx
 import { Button, notification } from 'antd';
 
 const openNotification = () => {
@@ -24,6 +24,6 @@ const openNotification = () => {
 };
 
 ReactDOM.render(
-  <Button type="primary" onClick={openNotification}>Open the notification box</Button>
-, mountNode);
+  <Button type="primary" onClick={openNotification}>Open the notification box</Button>,
+  mountNode);
 ````

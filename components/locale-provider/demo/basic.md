@@ -13,21 +13,19 @@ title:
 
 Wrap your app with `LocaleProvider`, and apply the corresponding language package.
 
-````__react
+````jsx
 import { Pagination, LocaleProvider } from 'antd';
-import enUS from 'antd/lib/locale-provider/en_US';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 
-function App() {
-  return (
-    <div>
-      <Pagination defaultCurrent={1} total={50} showSizeChanger />
-    </div>
-  );
-}
+const App = () => (
+  <div>
+    <Pagination defaultCurrent={1} total={50} showSizeChanger />
+  </div>
+);
 
 ReactDOM.render(
-  <LocaleProvider locale={enUS}>
+  <LocaleProvider locale={zhCN}>
     <App />
-  </LocaleProvider>
-, mountNode);
+  </LocaleProvider>,
+  mountNode);
 ````

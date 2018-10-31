@@ -21,7 +21,7 @@ Control filters and sorters by `filteredValue` and `sortOrder`.
 > 2. Make sure `sortOrder` is assigned for only one column.
 > 3. `column.key` is required.
 
-````__react
+````jsx
 import { Table, Button } from 'antd';
 
 const data = [{
@@ -46,37 +46,40 @@ const data = [{
   address: 'London No. 2 Lake Park',
 }];
 
-const App = React.createClass({
-  getInitialState() {
-    return {
-      filteredInfo: null,
-      sortedInfo: null,
-    };
-  },
-  handleChange(pagination, filters, sorter) {
+class App extends React.Component {
+  state = {
+    filteredInfo: null,
+    sortedInfo: null,
+  };
+
+  handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter);
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter,
     });
-  },
-  clearFilters() {
+  }
+
+  clearFilters = () => {
     this.setState({ filteredInfo: null });
-  },
-  clearAll() {
+  }
+
+  clearAll = () => {
     this.setState({
       filteredInfo: null,
       sortedInfo: null,
     });
-  },
-  setAgeSort() {
+  }
+
+  setAgeSort = () => {
     this.setState({
       sortedInfo: {
         order: 'descend',
         columnKey: 'age',
       },
     });
-  },
+  }
+
   render() {
     let { sortedInfo, filteredInfo } = this.state;
     sortedInfo = sortedInfo || {};
@@ -115,15 +118,15 @@ const App = React.createClass({
     return (
       <div>
         <div className="table-operations">
-          <Button type="ghost" onClick={this.setAgeSort}>Sort age</Button>
-          <Button type="ghost" onClick={this.clearFilters}>Clear filters</Button>
-          <Button type="ghost" onClick={this.clearAll}>Clear filters and sorters</Button>
+          <Button onClick={this.setAgeSort}>Sort age</Button>
+          <Button onClick={this.clearFilters}>Clear filters</Button>
+          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
         </div>
         <Table columns={columns} dataSource={data} onChange={this.handleChange} />
       </div>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, mountNode);
 ````

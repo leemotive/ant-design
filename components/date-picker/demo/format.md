@@ -13,9 +13,10 @@ title:
 
 We can set the date format by `format`.
 
-````__react
+````jsx
 import { DatePicker } from 'antd';
 import moment from 'moment';
+
 const { MonthPicker, RangePicker } = DatePicker;
 
 const dateFormat = 'YYYY/MM/DD';
@@ -30,6 +31,6 @@ ReactDOM.render(
       defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
       format={dateFormat}
     />
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````

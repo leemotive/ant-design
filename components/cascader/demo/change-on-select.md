@@ -13,7 +13,7 @@ title:
 
 Allow only select parent options.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -45,6 +45,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <Cascader options={options} onChange={onChange} changeOnSelect />
-, mountNode);
+  <Cascader options={options} onChange={onChange} changeOnSelect />,
+  mountNode);
 ````

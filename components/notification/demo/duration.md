@@ -15,7 +15,7 @@ title:
 the notification closes automatically. If not specified, default value is 4.5 seconds. If you set the value to 0,
 the notification box will never close automatically.
 
-````__react
+````jsx
 import { Button, notification } from 'antd';
 
 const openNotification = () => {
@@ -28,6 +28,6 @@ const openNotification = () => {
 };
 
 ReactDOM.render(
-  <Button type="primary" onClick={openNotification}>Open the notification box</Button>
-, mountNode);
+  <Button type="primary" onClick={openNotification}>Open the notification box</Button>,
+  mountNode);
 ````

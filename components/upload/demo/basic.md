@@ -11,14 +11,14 @@ title:
 
 ## en-US
 
-Classic mode. File selection dialog pops up when upload button is clicked 
+Classic mode. File selection dialog pops up when upload button is clicked.
 
-````__react
+````jsx
 import { Upload, message, Button, Icon } from 'antd';
 
 const props = {
   name: 'file',
-  action: '/upload.do',
+  action: '//jsonplaceholder.typicode.com/posts/',
   headers: {
     authorization: 'authorization-text',
   },
@@ -36,9 +36,9 @@ const props = {
 
 ReactDOM.render(
   <Upload {...props}>
-    <Button type="ghost">
+    <Button>
       <Icon type="upload" /> Click to Upload
     </Button>
-  </Upload>
-, mountNode);
+  </Upload>,
+  mountNode);
 ````

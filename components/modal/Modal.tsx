@@ -1,11 +1,16 @@
-import { PropTypes } from 'react';
-import React from 'react';
+import * as React from 'react';
 import Dialog from 'rc-dialog';
+import * as PropTypes from 'prop-types';
+import classNames from 'classnames';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import Button from '../button';
+import { ButtonType, NativeButtonProps } from '../button/button';
+import LocaleReceiver from '../locale-provider/LocaleReceiver';
+import { getConfirmLocale } from './locale';
+import Icon from '../icon';
 
-let mousePosition;
-let mousePositionEventBinded;
+let mousePosition: { x: number, y: number } | null;
+let mousePositionEventBinded: boolean;
 
 export interface ModalProps {
   /** 对话框是否可见*/
@@ -17,40 +22,88 @@ export interface ModalProps {
   /** 是否显示右上角的关闭按钮*/
   closable?: boolean;
   /** 点击确定回调*/
-  onOk?: () => void;
+  onOk?: (e: React.MouseEvent<any>) => void;
   /** 点击模态框右上角叉、取消按钮、Props.maskClosable 值为 true 时的遮罩层或键盘按下 Esc 时的回调*/
   onCancel?: (e: React.MouseEvent<any>) => void;
   afterClose?: () => void;
+  /** 居中 */
+  centered?: boolean;
   /** 宽度*/
   width?: string | number;
   /** 底部内容*/
   footer?: React.ReactNode;
   /** 确认按钮文字*/
   okText?: string;
+  /** 确认按钮类型*/
+  okType?: ButtonType;
   /** 取消按钮文字*/
   cancelText?: string;
   /** 点击蒙层是否允许关闭*/
   maskClosable?: boolean;
+  okButtonProps?: NativeButtonProps;
+  cancelButtonProps?: NativeButtonProps;
+  destroyOnClose?: boolean;
   style?: React.CSSProperties;
   wrapClassName?: string;
   maskTransitionName?: string;
   transitionName?: string;
   className?: string;
+  getContainer?: (instance: React.ReactInstance) => HTMLElement;
+  zIndex?: number;
+  bodyStyle?: React.CSSProperties;
+  maskStyle?: React.CSSProperties;
+  mask?: boolean;
+  keyboard?: boolean;
+  wrapProps?: any;
+  prefixCls?: string;
 }
 
-export interface ModalContext {
-  antLocale?: {
-    Modal?: any,
-  };
+export interface ModalFuncProps {
+  prefixCls?: string;
+  className?: string;
+  visible?: boolean;
+  title?: React.ReactNode;
+  content?: React.ReactNode;
+  onOk?: (...args: any[]) => any | PromiseLike<any>;
+  onCancel?: (...args: any[]) => any | PromiseLike<any>;
+  okButtonProps?: NativeButtonProps;
+  cancelButtonProps?: NativeButtonProps;
+  centered?: boolean;
+  width?: string | number;
+  iconClassName?: string;
+  okText?: string;
+  okType?: ButtonType;
+  cancelText?: string;
+  iconType?: string;
+  maskClosable?: boolean;
+  zIndex?: number;
+  okCancel?: boolean;
+  style?: React.CSSProperties;
+  maskStyle?: React.CSSProperties;
+  type?: string;
+  keyboard?: boolean;
+  getContainer?: (instance: React.ReactInstance) => HTMLElement;
+  autoFocusButton?: null | 'ok' | 'cancel';
 }
 
-export default class Modal extends React.Component<ModalProps, any> {
-  static info: any;
-  static success: any;
-  static error: any;
-  static warn: any;
-  static warning: any;
-  static confirm: any;
+export type ModalFunc = (props: ModalFuncProps) => {
+  destroy: () => void,
+  update: (newConfig: ModalFuncProps) => void,
+};
+
+export interface ModalLocale {
+  okText: string;
+  cancelText: string;
+  justOkText: string;
+}
+
+export default class Modal extends React.Component<ModalProps, {}> {
+  static info: ModalFunc;
+  static success: ModalFunc;
+  static error: ModalFunc;
+  static warn: ModalFunc;
+  static warning: ModalFunc;
+  static confirm: ModalFunc;
 
   static defaultProps = {
     prefixCls: 'ant-modal',
@@ -59,6 +112,9 @@ export default class Modal extends React.Component<ModalProps, any> {
     maskTransitionName: 'fade',
     confirmLoading: false,
     visible: false,
+    okType: 'primary' as ButtonType,
+    okButtonDisabled: false,
+    cancelButtonDisabled: false,
   };
 
   static propTypes = {
@@ -67,6 +123,7 @@ export default class Modal extends React.Component<ModalProps, any> {
     onCancel: PropTypes.func,
     okText: PropTypes.node,
     cancelText: PropTypes.node,
+    centered: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     confirmLoading: PropTypes.bool,
     visible: PropTypes.bool,
@@ -76,23 +133,17 @@ export default class Modal extends React.Component<ModalProps, any> {
     closable: PropTypes.bool,
   };
 
-  static contextTypes = {
-    antLocale: React.PropTypes.object,
-  };
-
-  context: ModalContext;
-
-  handleCancel = (e) => {
+  handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     const onCancel = this.props.onCancel;
     if (onCancel) {
       onCancel(e);
     }
   }
 
-  handleOk = () => {
+  handleOk = (e: React.MouseEvent<HTMLButtonElement>) => {
     const onOk = this.props.onOk;
     if (onOk) {
-      onOk();
+      onOk(e);
     }
   }
 
@@ -101,7 +152,7 @@ export default class Modal extends React.Component<ModalProps, any> {
       return;
     }
     // 只有点击事件支持从鼠标位置动画展开
-    addEventListener(document.documentElement, 'click', (e) => {
+    addEventListener(document.documentElement, 'click', (e: MouseEvent) => {
       mousePosition = {
         x: e.pageX,
         y: e.pageY,
@@ -114,41 +165,56 @@ export default class Modal extends React.Component<ModalProps, any> {
     mousePositionEventBinded = true;
   }
 
+  renderFooter = (locale: ModalLocale) => {
+    const { okText, okType, cancelText, confirmLoading } = this.props;
+    return (
+      <div>
+        <Button
+          onClick={this.handleCancel}
+          {...this.props.cancelButtonProps}
+        >
+          {cancelText || locale.cancelText}
+        </Button>
+        <Button
+          type={okType}
+          loading={confirmLoading}
+          onClick={this.handleOk}
+          {...this.props.okButtonProps}
+        >
+          {okText || locale.okText}
+        </Button>
+      </div>
+    );
+  }
+
   render() {
-    let { okText, cancelText, confirmLoading, footer, visible } = this.props;
+    const { footer, visible, wrapClassName, centered, prefixCls, ...restProps } = this.props;
 
-    if (this.context.antLocale && this.context.antLocale.Modal) {
-      okText = okText || this.context.antLocale.Modal.okText;
-      cancelText = cancelText || this.context.antLocale.Modal.cancelText;
-    }
+    const defaultFooter = (
+      <LocaleReceiver
+        componentName="Modal"
+        defaultLocale={getConfirmLocale()}
+      >
+        {this.renderFooter}
+      </LocaleReceiver>
+    );
 
-    const defaultFooter = [
-      <Button
-        key="cancel"
-        type="ghost"
-        size="large"
-        onClick={this.handleCancel}
-      >
-        {cancelText || '取消'}
-      </Button>,
-      <Button
-        key="confirm"
-        type="primary"
-        size="large"
-        loading={confirmLoading}
-        onClick={this.handleOk}
-      >
-        {okText || '确定'}
-      </Button>,
-    ];
+    const closeIcon = (
+      <span className={`${prefixCls}-close-x`}>
+        <Icon className={`${prefixCls}-close-icon`} type={'close'}/>
+      </span>
+    );
 
     return (
       <Dialog
-        onClose={this.handleCancel}
-        footer={footer || defaultFooter}
-        {...this.props}
+        {...restProps}
+        prefixCls={prefixCls}
+        wrapClassName={classNames({ [`${prefixCls}-centered`]: !!centered }, wrapClassName)}
+        footer={footer === undefined ? defaultFooter : footer}
         visible={visible}
         mousePosition={mousePosition}
+        onClose={this.handleCancel}
+        closeIcon={closeIcon}
       />
     );
   }

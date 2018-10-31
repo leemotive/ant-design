@@ -11,9 +11,9 @@ title:
 
 ## en-US
 
-Basic usage example
+Basic usage example.
 
-````__react
+````jsx
 import { Input } from 'antd';
 
 ReactDOM.render(<Input placeholder="Basic usage" />, mountNode);

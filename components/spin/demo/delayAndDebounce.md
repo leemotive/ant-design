@@ -13,16 +13,16 @@ title:
 
 Specifies a delay for loading state. If `spinning` ends during delay, loading status won't appear.
 
-````__react
+````jsx
 import { Spin, Alert, Switch } from 'antd';
 
-const Card = React.createClass({
-  getInitialState() {
-    return { loading: false };
-  },
-  toggle(value) {
+class Card extends React.Component {
+  state = { loading: false }
+
+  toggle = (value) => {
     this.setState({ loading: value });
-  },
+  }
+
   render() {
     const container = (
       <Alert
@@ -33,25 +33,14 @@ const Card = React.createClass({
     );
     return (
       <div>
-        <Spin spinning={this.state.loading} delay={500} >{container}</Spin>
-        Loading state：<Switch checked={this.state.loading} onChange={this.toggle} />
+        <Spin spinning={this.state.loading} delay={500}>{container}</Spin>
+        <div style={{ marginTop: 16 }}>
+          Loading state：<Switch checked={this.state.loading} onChange={this.toggle} />
+        </div>
       </div>
     );
-  },
-});
-
-ReactDOM.render(
-  <Card />
-, mountNode);
-````
-
-````css
-.example {
-  text-align: center;
-  background: rgba(0,0,0,0.05);
-  border-radius: 4px;
-  margin-bottom: 20px;
-  padding: 30px 50px;
-  margin: 20px 0;
+  }
 }
+
+ReactDOM.render(<Card />, mountNode);
 ````

@@ -13,9 +13,9 @@ Flex 布局基础。
 
 ## en-US
 
-Use `row-flex` define` flex` layout, its child elements depending on the value of the `start`,` center`, `end`,` space-between`, `space-around`, which are defined in its parent node layout mode.
+Use `row-flex` define `flex` layout, its child elements depending on the value of the `start`,` center`, `end`,` space-between`, `space-around`, which are defined in its parent node layout mode.
 
-````__react
+````jsx
 import { Row, Col } from 'antd';
 
 ReactDOM.render(

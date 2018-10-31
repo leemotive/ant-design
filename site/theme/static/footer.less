@@ -1,32 +1,79 @@
+@import './colors';
+
+@padding-space: 144px;
+
 footer {
   clear: both;
-  border-top: 1px solid #eee;
-  font-size: 12px;
-  background: #fff;
-  position: relative;
-  z-index: 1;
-  color: @text-color;
-  box-shadow: 0 1000px 0 1000px #fff;
-}
-
-footer ul {
-  overflow: hidden;
-  margin: 0 2%;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  width: 25%;
-  padding: 24px 2%;
-}
-
-footer ul li > h2 {
   font-size: 14px;
-  margin: 0 auto 8px;
-  font-weight: 500;
-}
+  background-color: #000;
+  position: relative;
+  z-index: 100;
+  color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 1000px 0 1000px #fff;
+  .ant-row {
+    text-align: center;
+    .footer-center {
+      display: inline-block;
+      text-align: left;
+      > h2 {
+        font-size: 16px;
+        margin: 0 auto 24px;
+        font-weight: 500;
+        position: relative;
 
-footer ul li > div {
-  margin: 0 8px 5px 0;
+        > .title-icon {
+          width: 27px;
+          margin-right: 16px;
+        }
+        > .anticon {
+          font-size: 16px;
+          position: absolute;
+          left: -22px;
+          top: 3px;
+          color: #aaa;
+        }
+      }
+      > div {
+        margin: 12px 0;
+      }
+    }
+  }
+  .footer-wrap {
+    position: relative;
+    padding: 86px @padding-space 93px @padding-space;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .bottom-bar {
+    text-align: center;
+    padding: 16px @padding-space;
+    margin: 0;
+    line-height: 32px;
+    overflow: hidden;
+    font-family: Avenir, @font-family;
+    font-size: 16px;
+    font-variant: tabular-nums;
+    a {
+      color: rgba(255, 255, 255, 0.65);
+      margin-left: 4px;
+      &:hover {
+        color: #fff;
+      }
+    }
+    .translate-button {
+      text-align: left;
+    }
+    .heart {
+      color: #f73f51;
+      font-size: 22px;
+    }
+  }
+  a {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  h2 {
+    color: rgba(255, 255, 255, 1);
+    & > span {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
 }

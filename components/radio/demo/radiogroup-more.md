@@ -3,7 +3,7 @@ order: 2
 title:
   zh-CN: RadioGroup 垂直
   en-US: Vertical RadioGroup
---------------------------
+---
 
 ## zh-CN
 
@@ -13,22 +13,23 @@ title:
 
 Vertical RadioGroup, with more radios.
 
-```__react
+```jsx
 import { Radio, Input } from 'antd';
+
 const RadioGroup = Radio.Group;
 
-const App = React.createClass({
-  getInitialState() {
-    return {
-      value: 1,
-    };
-  },
-  onChange(e) {
+class App extends React.Component {
+  state = {
+    value: 1,
+  }
+
+  onChange = (e) => {
     console.log('radio checked', e.target.value);
     this.setState({
       value: e.target.value,
     });
-  },
+  }
+
   render() {
     const radioStyle = {
       display: 'block',
@@ -46,8 +47,8 @@ const App = React.createClass({
         </Radio>
       </RadioGroup>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, mountNode);
 ```

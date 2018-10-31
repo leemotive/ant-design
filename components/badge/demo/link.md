@@ -13,7 +13,7 @@ title:
 
 The badge can be wrapped with `a` tag to make it linkable.
 
-````__react
+````jsx
 import { Badge } from 'antd';
 
 ReactDOM.render(
@@ -21,6 +21,6 @@ ReactDOM.render(
     <Badge count={5}>
       <span className="head-example" />
     </Badge>
-  </a>
-, mountNode);
+  </a>,
+  mountNode);
 ````

@@ -13,28 +13,30 @@ title:
 
 There are two built-in themes: 'light' and 'dark'. The default value is 'light'.
 
-````__react
+````jsx
 import { Menu, Icon, Switch } from 'antd';
+
 const SubMenu = Menu.SubMenu;
 
-const Sider = React.createClass({
-  getInitialState() {
-    return {
-      theme: 'dark',
-      current: '1',
-    };
-  },
-  changeTheme(value) {
+class Sider extends React.Component {
+  state = {
+    theme: 'dark',
+    current: '1',
+  }
+
+  changeTheme = (value) => {
     this.setState({
       theme: value ? 'dark' : 'light',
     });
-  },
-  handleClick(e) {
+  }
+
+  handleClick = (e) => {
     console.log('click ', e);
     this.setState({
       current: e.key,
     });
-  },
+  }
+
   render() {
     return (
       <div>
@@ -49,7 +51,7 @@ const Sider = React.createClass({
         <Menu
           theme={this.state.theme}
           onClick={this.handleClick}
-          style={{ width: 240 }}
+          style={{ width: 256 }}
           defaultOpenKeys={['sub1']}
           selectedKeys={[this.state.current]}
           mode="inline"
@@ -77,7 +79,8 @@ const Sider = React.createClass({
         </Menu>
       </div>
     );
-  },
-});
+  }
+}
+
 ReactDOM.render(<Sider />, mountNode);
 ````

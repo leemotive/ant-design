@@ -1,250 +1,89 @@
 ---
-category:
-  zh-CN: 设计基础
-  en-US: Design Fundamental
 order: 5
 title:
-  zh-CN: 组件动画
+  zh-CN: 动效
   en-US: Motion
 ---
 
-依据『巧用过渡』的设计原则，Ant Design 提供了一些预设的组件动画和缓动函数。更多动画可参考 [Ant Motion](https://motion.ant.design/)
+> [Ant Motion](https://motion.ant.design/) 是 Ant Design 中提炼出来的动效语言。他不仅仅是动效语言，同时也是一套 React 框架动效解决方案，可以帮助开发者，更容易在项目中使用动效。我们提供了单项，组合动画，以及整套解决方案。
 
-> 示例延长了动画时长以便展示。
+界面动效能加强用户认知且增加活力。
 
-`````__react
-const cssAnimation = require('css-animation');
-const antd = require('antd');
-const Select = antd.Select;
-const Option = Select.Option;
-const OptGroup = Select.OptGroup;
+## 动效价值
 
-let motions = [];
-motions = motions.concat([[{
-  name: '淡入',
-  value: 'fade',
-  direction: 'enter',
-  type: '渐隐'
-}, {
-  name: '淡出',
-  value: 'fade',
-  direction: 'leave',
-  type: '渐隐'
-}]]);
-motions = motions.concat([[{
-  name: '中心放大',
-  value: 'zoom',
-  direction: 'enter',
-  type: '缩放'
-}, {
-  name: '中心缩小',
-  value: 'zoom',
-  direction: 'leave',
-  type: '缩放'
-}, {
-  name: '上方放大',
-  value: 'zoom-up',
-  direction: 'enter',
-  type: '缩放'
-}, {
-  name: '上方缩小',
-  value: 'zoom-up',
-  direction: 'leave',
-  type: '缩放'
-}, {
-  name: '下方放大',
-  value: 'zoom-down',
-  direction: 'enter',
-  type: '缩放'
-}, {
-  name: '下方缩小',
-  value: 'zoom-down',
-  direction: 'leave',
-  type: '缩放'
-}, {
-  name: '左方放大',
-  value: 'zoom-left',
-  direction: 'enter',
-  type: '缩放'
-}, {
-  name: '左方缩小',
-  value: 'zoom-left',
-  direction: 'leave',
-  type: '缩放'
-}, {
-  name: '右方放大',
-  value: 'zoom-right',
-  direction: 'enter',
-  type: '缩放'
-}, {
-  name: '右方缩小',
-  value: 'zoom-right',
-  direction: 'leave',
-  type: '缩放'
-}]]);
-motions = motions.concat([[{
-  name: '上方滑入',
-  value: 'move-up',
-  direction: 'enter',
-  type: '移动'
-}, {
-  name: '上方滑出',
-  value: 'move-up',
-  direction: 'leave',
-  type: '移动'
-}, {
-  name: '下方滑入',
-  value: 'move-down',
-  direction: 'enter',
-  type: '移动'
-}, {
-  name: '下方滑出',
-  value: 'move-down',
-  direction: 'leave',
-  type: '移动'
-}, {
-  name: '左方滑入',
-  value: 'move-left',
-  direction: 'enter',
-  type: '移动'
-}, {
-  name: '左方滑出',
-  value: 'move-left',
-  direction: 'leave',
-  type: '移动'
-}, {
-  name: '右方滑入',
-  value: 'move-right',
-  direction: 'enter',
-  type: '移动'
-}, {
-  name: '右方滑出',
-  value: 'move-right',
-  direction: 'leave',
-  type: '移动'
-}]]);
-motions = motions.concat([[{
-  name: '上方展开',
-  value: 'slide-up',
-  direction: 'enter',
-  type: '伸缩'
-}, {
-  name: '上方缩回',
-  value: 'slide-up',
-  direction: 'leave',
-  type: '伸缩'
-}, {
-  name: '下方展开',
-  value: 'slide-down',
-  direction: 'enter',
-  type: '伸缩'
-}, {
-  name: '下方缩回',
-  value: 'slide-down',
-  direction: 'leave',
-  type: '伸缩'
-}, {
-  name: '左方展开',
-  value: 'slide-left',
-  direction: 'enter',
-  type: '伸缩'
-}, {
-  name: '左方缩回',
-  value: 'slide-left',
-  direction: 'leave',
-  type: '伸缩'
-}, {
-  name: '右方展开',
-  value: 'slide-right',
-  direction: 'enter',
-  type: '伸缩'
-}, {
-  name: '右方缩回',
-  value: 'slide-right',
-  direction: 'leave',
-  type: '伸缩'
-}]]);
-motions = motions.concat([[{
-  name: '摇摆',
-  value: 'swing',
-  direction: 'enter',
-  type: '其他'
-}]]);
+- **增加体验舒适度：** 让用户认知过程更为自然。
+- **增加界面活力：** 第一时间吸引注意力，突出重点。
+- **描述层级关系：** 体现元素之间的层级与空间关系。
+- **提供反馈、明确意向：** 助力交互体验。
 
-var leave = '-leave';
-var Test = React.createClass({
-  handleChange(e) {
-    var value = e;
-    if (value) {
-      this.demoNode.style.visibility = '';
-      cssAnimation(this.demoNode, value, () => {
-        if (value.slice(-leave.length) === leave) {
-          this.demoNode.style.visibility = 'hidden';
-        }
-      });
-    }
-  },
-  componentDidMount() {
-    this.demoNode = ReactDOM.findDOMNode(this.refs.demo);
-  },
-  render() {
-    const options = [<Option value="" key="placeholder">请选择预设动画</Option>].concat(motions.map(function (m, groupIndex) {
-      const opts = m.map(function (m2, optIndex) {
-        return <Option key={optIndex} value={m2.value + "-" + m2.direction}>{m2.name + " " + m2.value}</Option>
-      });
-      return <OptGroup key={groupIndex} label={m[0].type}>{opts}</OptGroup>;
-    }));
-    return <div>
-      <div className="motion-container">
-        <div ref="demo" className="motion-example"></div>
+## 衡量动效意义
+
+衡量一个动效是否有意义，我们可以通过以下几个标准来考核：
+
+- **一个动效的存在是否合理：**是否带有明确的目的性，助力交互体验，没有多余的动效。
+- **动效与性能：**不能出现大幅度波动丢帧或者卡顿现象, 动效的体验须是流畅的，并且不影响产品的性能。
+
+## 原则
+
+在企业级应用的产品设计中，使用动效和前台类产品有很大的不同，助力交互行为和信息认知的有效性会显得尤为重要，在 Ant Design 设计价值观的基础之上，我们衍生出动效设计的三原则：
+
+
+```__react
+
+import { Col, Row } from 'antd';
+
+const text = [
+  { title: '自然', img: 'https://gw.alipayobjects.com/zos/rmsportal/LyTPSGknLUlxiVdwMWyu.gif', content: '自然运动规律，保证视觉连惯，让用户感知到动作是成立的' },
+  { title: '高效', img: 'https://gw.alipayobjects.com/zos/rmsportal/SQOZVQVIossbXpzDmihu.gif', content: '尽量节省过渡的时间，快速完成过渡的动画效果' },
+  { title: '克制', img: 'https://gw.alipayobjects.com/zos/rmsportal/OkIXkscKxywYLSrilPIf.gif', content: '做有意义的动效，不去做太多的修饰和干扰用户' },
+];
+
+function Principle() {
+  const childrenToRender = text.map(item => (
+    <Col key={item.title} span={8} >
+      <div className="principle">
+        <div><img src={item.img} width="80%" /></div>
+        <h4>{item.title}</h4>
+        <p>{item.content}</p>
       </div>
-      <div className="motion-select-wrapper">
-        <Select value="" className='motion-select' onChange={this.handleChange}>{options}</Select>
-      </div>
-    </div>;
-  }
-});
+    </Col>
+  ));
+  return (
+    <div className="motion-principle-wrapper">
+      <Row gutter={32} className="principle-wrapper">
+        {childrenToRender}
+      </Row>
+    </div>
+  );
+}
 
-ReactDOM.render(<Test key="motion" />, mountNode);
-`````
+ReactDOM.render(<Principle />, mountNode);
+```
 
-## 组件动画
+### 自然
 
-| 组件         | 中文名              | 采用动画                                        |
-|--------------|--------------------|-------------------------------------------------|
-| Popover      | 气泡浮出            | `zoom-up` `zoom-down` `zoom-left` `zoom-right`  |
-| Popconfirm   | 气泡确认            | `zoom-up` `zoom-down` `zoom-left` `zoom-right`  |
-| Tooltip      | 文字提示            | `zoom-up` `zoom-down` `zoom-left` `zoom-right`  |
-| Modal        | 弹出框              | `zoom`                                          |
-| Badge        | 徽标数              | `zoom`                                          |
-| message      | 信息提示条          | `move-up`                                       |
-| notification | 通知框              | `move-right` & `slide-up`                       |
-| Dropdown     | 下拉菜单            | `slide-up`                                      |
-| Select       | 选择框              | `slide-up`                                      |
-| Cascader     | 级联选择框          | `slide-up`                                      |
-| TreeSelect   | 树选择框            | `slide-up`                                      |
-| DatePicker   | 日期选择框          | `slide-up`                                      |
-| TatePicker   | 日期选择框          | `slide-up`                                      |
-| Alert        | 警告提示            | `slide-up`                                      |
-| Menu         | 导航菜单            | `slide-up`                                      |
+自然的动效背后体现的是自然运动规律。这就要求动效在转换时保证视觉上的连惯性，让用户感知到这个动作是成立的，是能够引起共鸣的。
 
-在 React 的前端实现中，可以使用 [rc-animate](https://github.com/react-component/animate) 的 [transitionName](http://react-component.github.io/animate/examples/simple.html) 属性来给任意元素指定动画。
+<video class="motion-video-min" src="https://gw.alipayobjects.com/os/rmsportal/NTMlQdLIkPjOACXsdRrq.mp4" loop="true" />
 
-## 缓动函数
+以 button 的动效设计为例，设计师将其想像成一片树叶飘浮在水面之上，当你去触碰它时，叶子会下浮再反弹，然后出现涟漪效果。
 
-> `move@enter` 表示 `移动@进入`。
+### 高效
 
-| 名称                | 参数                                     | 说明                | 应用动画    |
-| -------------------|------------------------------------------|--------------------|------------|
-| @ease-out          | `cubic-bezier(0.215,0.61,0.355,1);`      | 默认后缓动           |            |
-| @ease-in           | `cubic-bezier(0.55,0.055,0.675,0.19);`   | 默认前缓动           |            |
-| @ease-in-out       | `cubic-bezier(0.645,0.045,0.355,1);`     | 默认前后缓动         |            |
-| @ease-out-back     | `cubic-bezier(0.18,0.89,0.32,1.28);`     | 结束回动             |            |
-| @ease-in-back      | `cubic-bezier(0.6,-0.3,0.74,0.05);`      | 开始回动             |            |
-| @ease-in-out-back  | `cubic-bezier(0.68,-0.55,0.27,1.55);`    | 前后回动             |            |
-| @ease-out-circ     | `cubic-bezier(0.08,0.82,0.17,1);`        | 圆形后缓动           | `move@enter` `zoom@enter` |
-| @ease-in-circ      | `cubic-bezier(0.6,0.04,0.98,0.34);`      | 圆形前缓动           | `move@leave` |
-| @ease-in-out-circ  | `cubic-bezier(0.78,0.14,0.15,0.86);`     | 圆形前后缓动          | `zoom@leave` |
-| @ease-out-quint    | `cubic-bezier(0.23, 1, 0.32, 1);`        | quint 后缓动         | `slide@enter`  |
-| @ease-in-quint     | `cubic-bezier(0.755, 0.05, 0.855, 0.06);`| quint 前缓动         | `slide@leave` |
-| @ease-in-out-quint | `cubic-bezier(0.86, 0, 0.07, 1);`        | quint 前后缓动       |             |
+企业级应用追求的是高效的用户体验，与之对应的动效设计也应如此，尽量节省过渡的时间，快速完成过渡的动画效果。
+
+<video class="motion-video-min" src="https://gw.alipayobjects.com/os/rmsportal/wMKeLGnpDxhwfCsBqKNN.mp4" loop="true" />
+
+举个例子，在出场与进场的动效里，出场不用大张旗鼓的去吸引用户的注意力，而是做到简单清晰即可。所以我们的出场时间采用了更快的速度,同时也不设置队列依次出场的形式，只需要整块直接消失即可。
+
+### 克制
+
+尽量避免夸张的动效，做有意义的事，不去做太多的修饰而干扰用户。
+
+<video src="https://gw.alipayobjects.com/os/rmsportal/FeUCANmoDRwCSmIcnPNF.mp4" loop="true" class="motion-video-min" />
+
+如我们的 Menu，在展开时，更注重的是菜单的内容，而右侧的图标切换并不是主要的元素，不需要过度强调去分散用户的注意。只需在不经意间切换，明确指示变化即可。
+
+<br />
+
+> 更多详细内容请前往 [Ant Motion 动效原则](https://motion.ant.design/language/basic) 查看。

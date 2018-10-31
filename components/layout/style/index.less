@@ -7,11 +7,21 @@
   display: flex;
   flex-direction: column;
   flex: auto;
-  overflow: auto;
   background: @layout-body-background;
+  /* fix firefox can't set height smaller than content on flex item */
+  min-height: 0;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
 
   &&-has-sider {
     flex-direction: row;
+    > .@{layout-prefix-cls},
+    > .@{layout-prefix-cls}-content {
+      overflow-x: hidden;
+    }
   }
 
   &-header,
@@ -27,6 +37,7 @@
   }
 
   &-footer {
+    background: @layout-footer-background;
     padding: @layout-footer-padding;
     color: @text-color;
     font-size: @font-size-base;
@@ -34,13 +45,26 @@
 
   &-content {
     flex: auto;
+    /* fix firefox can't set height smaller than content on flex item */
+    min-height: 0;
   }
 
   &-sider {
-    flex: 0 0 200px;
-    transition: all .3s ease;
+    transition: all .2s;
     position: relative;
     background: @layout-sider-background;
+
+    /* fix firefox can't set width smaller than content on flex item */
+    min-width: 0;
+
+    &-children {
+      height: 100%;
+      // Hack for fixing margin collaspe bug
+      // https://github.com/ant-design/ant-design/issues/7967
+      // solution from https://stackoverflow.com/a/33132624/3040605
+      padding-top: 0.1px;
+      margin-top: -0.1px;
+    }
 
     &-has-trigger {
       padding-bottom: @layout-trigger-height;
@@ -50,20 +74,45 @@
       order: 1;
     }
 
-    &-collapsed {
-      flex: 0 0 64px;
-    }
-
     &-trigger {
-      position: absolute;
+      position: fixed;
       text-align: center;
-      width: 100%;
       bottom: 0;
       cursor: pointer;
       height: @layout-trigger-height;
       line-height: @layout-trigger-height;
-      background: tint(@heading-color, 20%);
-      color: #fff;
+      color: @layout-trigger-color;
+      background: @layout-trigger-background;
+      z-index: 1;
+      transition: all .2s;
+    }
+
+    &-zero-width {
+      & > * {
+        overflow: hidden;
+      }
+
+      &-trigger {
+        position: absolute;
+        top: @layout-header-height;
+        right: -@layout-zero-trigger-width;
+        text-align: center;
+        width: @layout-zero-trigger-width;
+        height: @layout-zero-trigger-height;
+        line-height: @layout-zero-trigger-height;
+        background: @layout-sider-background;
+        color: @layout-trigger-color;
+        font-size: @layout-zero-trigger-width / 2;
+        border-radius: 0 @border-radius-base @border-radius-base 0;
+        cursor: pointer;
+        transition: background .3s ease;
+
+        &:hover {
+          background: tint(@layout-sider-background, 10%);
+        }
+      }
     }
   }
 }
+
+@import './light';

@@ -13,23 +13,24 @@ title:
 
 Horizontal top navigation menu.
 
-````__react
+````jsx
 import { Menu, Icon } from 'antd';
+
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-const App = React.createClass({
-  getInitialState() {
-    return {
-      current: 'mail',
-    };
-  },
-  handleClick(e) {
+class App extends React.Component {
+  state = {
+    current: 'mail',
+  }
+
+  handleClick = (e) => {
     console.log('click ', e);
     this.setState({
       current: e.key,
     });
-  },
+  }
+
   render() {
     return (
       <Menu
@@ -43,7 +44,7 @@ const App = React.createClass({
         <Menu.Item key="app" disabled>
           <Icon type="appstore" />Navigation Two
         </Menu.Item>
-        <SubMenu title={<span><Icon type="setting" />Navigation Three - Submenu</span>}>
+        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="setting" />Navigation Three - Submenu</span>}>
           <MenuItemGroup title="Item 1">
             <Menu.Item key="setting:1">Option 1</Menu.Item>
             <Menu.Item key="setting:2">Option 2</Menu.Item>
@@ -58,8 +59,8 @@ const App = React.createClass({
         </Menu.Item>
       </Menu>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, mountNode);
 ````

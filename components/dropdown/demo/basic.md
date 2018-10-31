@@ -13,7 +13,7 @@ title:
 
 The most basic dropdown menu.
 
-````__react
+````jsx
 import { Menu, Dropdown, Icon } from 'antd';
 
 const menu = (
@@ -25,7 +25,7 @@ const menu = (
       <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">2nd menu item</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3d menu item</a>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">3rd menu item</a>
     </Menu.Item>
   </Menu>
 );
@@ -35,6 +35,6 @@ ReactDOM.render(
     <a className="ant-dropdown-link" href="#">
       Hover me <Icon type="down" />
     </a>
-  </Dropdown>
-, mountNode);
+  </Dropdown>,
+  mountNode);
 ````

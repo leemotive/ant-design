@@ -13,7 +13,7 @@ title:
 
 After users upload picture, the thumbnail will be shown in list. The upload button will disappear when count meets limitation.
 
-````__react
+````jsx
 import { Upload, Icon, Modal } from 'antd';
 
 class PicturesWall extends React.Component {
@@ -21,7 +21,7 @@ class PicturesWall extends React.Component {
     previewVisible: false,
     previewImage: '',
     fileList: [{
-      uid: -1,
+      uid: '-1',
       name: 'xxx.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -50,7 +50,7 @@ class PicturesWall extends React.Component {
     return (
       <div className="clearfix">
         <Upload
-          action="/upload.do"
+          action="//jsonplaceholder.typicode.com/posts/"
           listType="picture-card"
           fileList={fileList}
           onPreview={this.handlePreview}
@@ -72,13 +72,12 @@ ReactDOM.render(<PicturesWall />, mountNode);
 ````css
 /* you can make up upload button and sample style by using stylesheets */
 .ant-upload-select-picture-card i {
-  font-size: 28px;
+  font-size: 32px;
   color: #999;
 }
 
 .ant-upload-select-picture-card .ant-upload-text {
   margin-top: 8px;
-  font-size: 12px;
   color: #666;
 }
 ````

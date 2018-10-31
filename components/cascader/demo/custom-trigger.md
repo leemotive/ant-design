@@ -13,7 +13,7 @@ title:
 
 Separate trigger button and result.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -32,17 +32,17 @@ const options = [{
   }],
 }];
 
-const CitySwitcher = React.createClass({
-  getInitialState() {
-    return {
-      text: 'Unselect',
-    };
-  },
-  onChange(value, selectedOptions) {
+class CitySwitcher extends React.Component {
+  state = {
+    text: 'Unselect',
+  };
+
+  onChange = (value, selectedOptions) => {
     this.setState({
       text: selectedOptions.map(o => o.label).join(', '),
     });
-  },
+  }
+
   render() {
     return (
       <span>
@@ -53,8 +53,8 @@ const CitySwitcher = React.createClass({
         </Cascader>
       </span>
     );
-  },
-});
+  }
+}
 
 ReactDOM.render(<CitySwitcher />, mountNode);
 ````

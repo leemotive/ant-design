@@ -7,14 +7,14 @@ title:
 
 ## zh-CN
 
-通过 `filterDropdown`、`filterDropdownVisible` 和 `filterDropdownVisibleChange` 定义自定义的列筛选功能，并实现一个搜索列的示例。
+通过 `filterDropdown` 自定义的列筛选功能，并实现一个搜索列的示例。
 
 ## en-US
 
-Implement a customized column search example via `filterDropdown`, `filterDropdownVisible` and `filterDropdownVisibleChange`.
+Implement a customized column search example via `filterDropdown`.
 
-````__react
-import { Table, Input, Button } from 'antd';
+````jsx
+import { Table, Input, Button, Icon } from 'antd';
 
 const data = [{
   key: '1',
@@ -23,12 +23,12 @@ const data = [{
   address: 'New York No. 1 Lake Park',
 }, {
   key: '2',
-  name: 'Jim Green',
+  name: 'Joe Black',
   age: 42,
   address: 'London No. 1 Lake Park',
 }, {
   key: '3',
-  name: 'Joe Black',
+  name: 'Jim Green',
   age: 32,
   address: 'Sidney No. 1 Lake Park',
 }, {
@@ -38,58 +38,59 @@ const data = [{
   address: 'London No. 2 Lake Park',
 }];
 
-const App = React.createClass({
-  getInitialState() {
-    return {
-      filterDropdownVisible: false,
-      data,
-      searchText: '',
-    };
-  },
-  onInputChange(e) {
-    this.setState({ searchText: e.target.value });
-  },
-  onSearch() {
-    const { searchText } = this.state;
-    const reg = new RegExp(searchText, 'gi');
-    this.setState({
-      filterDropdownVisible: false,
-      data: data.map((record) => {
-        const match = record.name.match(reg);
-        if (!match) {
-          return null;
-        }
-        return {
-          ...record,
-          name: (
-            <span>
-              {record.name.split(reg).map((text, i) => (
-                i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-              ))}
-            </span>
-          ),
-        };
-      }).filter(record => !!record),
-    });
-  },
+class App extends React.Component {
+  state = {
+    searchText: '',
+  };
+
+  handleSearch = (selectedKeys, confirm) => () => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  }
+
+  handleReset = clearFilters => () => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  }
+
   render() {
     const columns = [{
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      filterDropdown: (
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
         <div className="custom-filter-dropdown">
           <Input
+            ref={ele => this.searchInput = ele}
             placeholder="Search name"
-            value={this.state.searchText}
-            onChange={this.onInputChange}
-            onPressEnter={this.onSearch}
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={this.handleSearch(selectedKeys, confirm)}
           />
-          <Button type="primary" onClick={this.onSearch}>Search</Button>
+          <Button type="primary" onClick={this.handleSearch(selectedKeys, confirm)}>Search</Button>
+          <Button onClick={this.handleReset(clearFilters)}>Reset</Button>
         </div>
       ),
-      filterDropdownVisible: this.state.filterDropdownVisible,
-      onFilterDropdownVisibleChange: visible => this.setState({ filterDropdownVisible: visible }),
+      filterIcon: filtered => <Icon type="smile-o" style={{ color: filtered ? '#108ee9' : '#aaa' }} />,
+      onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: (visible) => {
+        if (visible) {
+          setTimeout(() => {
+            this.searchInput.focus();
+          });
+        }
+      },
+      render: (text) => {
+        const { searchText } = this.state;
+        return searchText ? (
+          <span>
+            {text.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i')).map((fragment, i) => (
+              fragment.toLowerCase() === searchText.toLowerCase()
+                ? <span key={i} className="highlight">{fragment}</span> : fragment // eslint-disable-line
+            ))}
+          </span>
+        ) : text;
+      },
     }, {
       title: 'Age',
       dataIndex: 'age',
@@ -98,10 +99,18 @@ const App = React.createClass({
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
+      filters: [{
+        text: 'London',
+        value: 'London',
+      }, {
+        text: 'New York',
+        value: 'New York',
+      }],
+      onFilter: (value, record) => record.address.indexOf(value) === 0,
     }];
-    return <Table columns={columns} dataSource={this.state.data} />;
-  },
-});
+    return <Table columns={columns} dataSource={data} />;
+  }
+}
 
 ReactDOM.render(<App />, mountNode);
 ````
@@ -116,6 +125,10 @@ ReactDOM.render(<App />, mountNode);
 
 .custom-filter-dropdown input {
   width: 130px;
+  margin-right: 8px;
+}
+
+.custom-filter-dropdown button {
   margin-right: 8px;
 }
 

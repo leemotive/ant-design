@@ -13,7 +13,7 @@ title:
 
 A basic calendar component with Year/Month switch.
 
-````__react
+````jsx
 import { Calendar } from 'antd';
 
 function onPanelChange(value, mode) {
@@ -21,6 +21,6 @@ function onPanelChange(value, mode) {
 }
 
 ReactDOM.render(
-  <Calendar onPanelChange={onPanelChange} />
-, mountNode);
+  <Calendar onPanelChange={onPanelChange} />,
+  mountNode);
 ````

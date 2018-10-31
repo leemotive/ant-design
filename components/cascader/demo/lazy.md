@@ -17,7 +17,7 @@ Load options lazily with `loadData`.
 
 > Note: `loadData` cannot work with `showSearch`.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -32,15 +32,13 @@ const options = [{
 
 class LazyOptions extends React.Component {
   state = {
-    inputValue: '',
     options,
   };
+
   onChange = (value, selectedOptions) => {
     console.log(value, selectedOptions);
-    this.setState({
-      inputValue: selectedOptions.map(o => o.label).join(', '),
-    });
   }
+
   loadData = (selectedOptions) => {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;
@@ -60,6 +58,7 @@ class LazyOptions extends React.Component {
       });
     }, 1000);
   }
+
   render() {
     return (
       <Cascader

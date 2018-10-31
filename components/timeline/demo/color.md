@@ -13,7 +13,7 @@ title:
 
 Set the color of circles. `green` means completed or success status, `red` means warning or error, and `blue` means ongoing or other default status.
 
-````__react
+````jsx
 import { Timeline } from 'antd';
 
 ReactDOM.render(
@@ -30,6 +30,6 @@ ReactDOM.render(
       <p>Technical testing 2</p>
       <p>Technical testing 3 2015-09-01</p>
     </Timeline.Item>
-  </Timeline>
-, mountNode);
+  </Timeline>,
+  mountNode);
 ````

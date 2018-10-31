@@ -13,8 +13,9 @@ title:
 
 The simplest usage.
 
-```__react
+```jsx
 import { Anchor } from 'antd';
+
 const { Link } = Anchor;
 
 ReactDOM.render(
@@ -25,8 +26,8 @@ ReactDOM.render(
       <Link href="#Anchor-Props" title="Anchor Props" />
       <Link href="#Link-Props" title="Link Props" />
     </Link>
-  </Anchor>
-, mountNode);
+  </Anchor>,
+  mountNode);
 ```
 
 <style>

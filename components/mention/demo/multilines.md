@@ -13,8 +13,9 @@ title:
 
 Multi lines mode.
 
-````__react
+````jsx
 import { Mention } from 'antd';
+
 const { toString } = Mention;
 
 function onChange(editorState) {
@@ -27,6 +28,6 @@ ReactDOM.render(
     onChange={onChange}
     suggestions={['afc163', 'benjycui', 'yiminghe', 'jljsj33', 'dqaria', 'RaoHai']}
     multiLines
-  />
-, mountNode);
+  />,
+  mountNode);
 ````

@@ -13,7 +13,7 @@ title:
 
 Display a global loading indicator, which is dismissed by itself asynchronously.
 
-````__react
+````jsx
 import { message, Button } from 'antd';
 
 const success = () => {
@@ -22,6 +22,7 @@ const success = () => {
   setTimeout(hide, 2500);
 };
 
-ReactDOM.render(<Button onClick={success}>Display a loading indicator</Button>
-, mountNode);
+ReactDOM.render(
+  <Button onClick={success}>Display a loading indicator</Button>,
+  mountNode);
 ````

@@ -13,7 +13,7 @@ title:
 
 A notification box with a icon at the left side.
 
-````__react
+````jsx
 import { Button, notification } from 'antd';
 
 const openNotificationWithIcon = (type) => {
@@ -29,8 +29,8 @@ ReactDOM.render(
     <Button onClick={() => openNotificationWithIcon('info')}>Info</Button>
     <Button onClick={() => openNotificationWithIcon('warning')}>Warning</Button>
     <Button onClick={() => openNotificationWithIcon('error')}>Error</Button>
-  </div>
-, mountNode);
+  </div>,
+  mountNode);
 ````
 
 <style>

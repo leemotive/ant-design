@@ -1,5 +1,5 @@
-import React from 'react';
-import { PropTypes } from 'react';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 
 export interface BreadcrumbItemProps {
   prefixCls?: string;
@@ -8,6 +8,8 @@ export interface BreadcrumbItemProps {
 }
 
 export default class BreadcrumbItem extends React.Component<BreadcrumbItemProps, any> {
+  static __ANT_BREADCRUMB_ITEM = true;
+
   static defaultProps = {
     prefixCls: 'ant-breadcrumb',
     separator: '/',
@@ -30,11 +32,14 @@ export default class BreadcrumbItem extends React.Component<BreadcrumbItemProps,
     } else {
       link = <span className={`${prefixCls}-link`} {...restProps}>{children}</span>;
     }
-    return (
-      <span>
-        {link}
-        <span className={`${prefixCls}-separator`}>{separator}</span>
-      </span>
-    );
+    if (children) {
+      return (
+        <span>
+          {link}
+          <span className={`${prefixCls}-separator`}>{separator}</span>
+        </span>
+      );
+    }
+    return null;
   }
 }

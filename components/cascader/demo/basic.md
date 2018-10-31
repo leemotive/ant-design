@@ -13,7 +13,7 @@ title:
 
 Cascade selection box for selecting province/city/district.
 
-````__react
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -45,6 +45,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <Cascader options={options} onChange={onChange} placeholder="Please select" />
-, mountNode);
+  <Cascader options={options} onChange={onChange} placeholder="Please select" />,
+  mountNode);
 ````

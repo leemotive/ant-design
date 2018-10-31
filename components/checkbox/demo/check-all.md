@@ -13,21 +13,21 @@ title:
 
 The `indeterminate` property can help you to achieve a 'check all' effect.
 
-````__react
+````jsx
 import { Checkbox } from 'antd';
+
 const CheckboxGroup = Checkbox.Group;
 
 const plainOptions = ['Apple', 'Pear', 'Orange'];
 const defaultCheckedList = ['Apple', 'Orange'];
 
-const App = React.createClass({
-  getInitialState() {
-    return {
-      checkedList: defaultCheckedList,
-      indeterminate: true,
-      checkAll: false,
-    };
-  },
+class App extends React.Component {
+  state = {
+    checkedList: defaultCheckedList,
+    indeterminate: true,
+    checkAll: false,
+  };
+
   render() {
     return (
       <div>
@@ -44,22 +44,24 @@ const App = React.createClass({
         <CheckboxGroup options={plainOptions} value={this.state.checkedList} onChange={this.onChange} />
       </div>
     );
-  },
-  onChange(checkedList) {
+  }
+
+  onChange = (checkedList) => {
     this.setState({
       checkedList,
       indeterminate: !!checkedList.length && (checkedList.length < plainOptions.length),
       checkAll: checkedList.length === plainOptions.length,
     });
-  },
-  onCheckAllChange(e) {
+  }
+
+  onCheckAllChange = (e) => {
     this.setState({
       checkedList: e.target.checked ? plainOptions : [],
       indeterminate: false,
       checkAll: e.target.checked,
     });
-  },
-});
+  }
+}
 
 ReactDOM.render(<App />, mountNode);
 ````

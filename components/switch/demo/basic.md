@@ -13,7 +13,7 @@ title:
 
 The most basic usage.
 
-````__react
+````jsx
 import { Switch } from 'antd';
 
 function onChange(checked) {
@@ -21,7 +21,7 @@ function onChange(checked) {
 }
 
 ReactDOM.render(
-  <Switch defaultChecked={false} onChange={onChange} />,
+  <Switch defaultChecked onChange={onChange} />,
   mountNode
 );
 ````
@@ -30,4 +30,4 @@ ReactDOM.render(
 .ant-switch {
   margin-bottom: 8px;
 }
-<style>
+</style>

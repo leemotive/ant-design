@@ -9,11 +9,15 @@ title:
 
 可以直接搜索选项并选择。
 
+> `Cascader[showSearch]` 暂不支持服务端搜索，更多信息见 [#5547](https://github.com/ant-design/ant-design/issues/5547)
+
 ## en-US
 
 Search and select options directly.
 
-````__react
+> Now, `Cascader[showSearch]` doesn't support search on server, more info [#5547](https://github.com/ant-design/ant-design/issues/5547)
+
+````jsx
 import { Cascader } from 'antd';
 
 const options = [{
@@ -25,6 +29,10 @@ const options = [{
     children: [{
       value: 'xihu',
       label: 'West Lake',
+    }, {
+      value: 'xiasha',
+      label: 'Xia Sha',
+      disabled: true,
     }],
   }],
 }, {
@@ -44,12 +52,16 @@ function onChange(value, selectedOptions) {
   console.log(value, selectedOptions);
 }
 
+function filter(inputValue, path) {
+  return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
+}
+
 ReactDOM.render(
   <Cascader
     options={options}
     onChange={onChange}
     placeholder="Please select"
-    showSearch
+    showSearch={{ filter }}
   />,
   mountNode
 );

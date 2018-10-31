@@ -1,6 +1,6 @@
 ---
-order: 5
-title: 
+order: 6
+title:
   zh-CN: 分组
   en-US: Option Group
 ---
@@ -13,19 +13,19 @@ title:
 
 Using `OptGroup` to group the options.
 
-````__react
+````jsx
 import { Select } from 'antd';
-const Option = Select.Option;
-const OptGroup = Select.OptGroup;
+
+const { Option, OptGroup } = Select;
 
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
 ReactDOM.render(
-  <Select defaultValue="lucy"
+  <Select
+    defaultValue="lucy"
     style={{ width: 200 }}
-    showSearch={false}
     onChange={handleChange}
   >
     <OptGroup label="Manager">
@@ -35,6 +35,6 @@ ReactDOM.render(
     <OptGroup label="Engineer">
       <Option value="Yiminghe">yiminghe</Option>
     </OptGroup>
-  </Select>
-, mountNode);
+  </Select>,
+  mountNode);
 ````

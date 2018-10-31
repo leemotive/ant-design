@@ -13,7 +13,7 @@ title:
 
 Basic usage of checkbox.
 
-````__react
+````jsx
 import { Checkbox } from 'antd';
 
 function onChange(e) {
@@ -21,6 +21,6 @@ function onChange(e) {
 }
 
 ReactDOM.render(
-  <Checkbox onChange={onChange}>Checkbox</Checkbox>
-, mountNode);
+  <Checkbox onChange={onChange}>Checkbox</Checkbox>,
+  mountNode);
 ````

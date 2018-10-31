@@ -13,8 +13,9 @@ title:
 
 Multiple selection, selecting from existing items (scroll the menu).
 
-````__react
+````jsx
 import { Select } from 'antd';
+
 const Option = Select.Option;
 
 const children = [];
@@ -28,13 +29,13 @@ function handleChange(value) {
 
 ReactDOM.render(
   <Select
-    multiple
+    mode="multiple"
     style={{ width: '100%' }}
     placeholder="Please select"
     defaultValue={['a10', 'c12']}
     onChange={handleChange}
   >
     {children}
-  </Select>
-, mountNode);
+  </Select>,
+  mountNode);
 ````

@@ -13,7 +13,7 @@ title:
 
 Numeric-only input box.
 
-````__react
+````jsx
 import { InputNumber } from 'antd';
 
 function onChange(value) {
@@ -21,6 +21,6 @@ function onChange(value) {
 }
 
 ReactDOM.render(
-  <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />
-, mountNode);
+  <InputNumber min={1} max={10} defaultValue={3} onChange={onChange} />,
+  mountNode);
 ````

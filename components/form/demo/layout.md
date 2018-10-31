@@ -1,5 +1,5 @@
 ---
-order: 13
+order: 12
 title:
   zh-CN: 表单布局
   en-US: Form Layout
@@ -13,8 +13,9 @@ title:
 
 There are three layout for form: `horizontal`, `vertical`, `inline`.
 
-````__react
+````jsx
 import { Form, Input, Button, Radio } from 'antd';
+
 const FormItem = Form.Item;
 
 class FormLayoutDemo extends React.Component {
@@ -24,9 +25,11 @@ class FormLayoutDemo extends React.Component {
       formLayout: 'horizontal',
     };
   }
+
   handleFormLayoutChange = (e) => {
     this.setState({ formLayout: e.target.value });
   }
+
   render() {
     const { formLayout } = this.state;
     const formItemLayout = formLayout === 'horizontal' ? {
@@ -36,10 +39,9 @@ class FormLayoutDemo extends React.Component {
     const buttonItemLayout = formLayout === 'horizontal' ? {
       wrapperCol: { span: 14, offset: 4 },
     } : null;
-    const layoutProps = { [formLayout]: true };
     return (
       <div>
-        <Form {...layoutProps}>
+        <Form layout={formLayout}>
           <FormItem
             label="Form Layout"
             {...formItemLayout}
@@ -63,7 +65,7 @@ class FormLayoutDemo extends React.Component {
             <Input placeholder="input placeholder" />
           </FormItem>
           <FormItem {...buttonItemLayout}>
-            <Button type="primary" size="large">Submit</Button>
+            <Button type="primary">Submit</Button>
           </FormItem>
         </Form>
       </div>

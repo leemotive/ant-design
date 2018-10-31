@@ -13,7 +13,7 @@ title:
 
 A simple card only containing a content area.
 
-````__react
+````jsx
 import { Card } from 'antd';
 
 ReactDOM.render(
@@ -21,6 +21,6 @@ ReactDOM.render(
     <p>Card content</p>
     <p>Card content</p>
     <p>Card content</p>
-  </Card>
-, mountNode);
+  </Card>,
+  mountNode);
 ````
